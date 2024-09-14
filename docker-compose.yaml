@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+
+  nginx:
+    image: nginx:latest
+    container_name: cloudswitch-master-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/www/html:/usr/share/nginx/html
+    networks:
+      - network # later add to networks via 
+      # docker network create <X-network>
+      # docker network connect <X-network> cloudswitch-master-proxy
+      # nginx -s reload
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/www/certbot:/var/www/certbot
+    command: certonly --webroot -w /var/www/html -d wdi-app.cloudswitch.com --email nurein.umeya@mail.utoronto.ca --agree-tos
+    entrypoint: "/bin/sh -c 'while :; do sleep 12h & wait $${!}; certbot renew; done'"
+
+
+  frontend:
+    build: ./WDI-Frontend
+    container_name: wdi-app_frontend
+    volumes:
+      -  /var/www/html/wdi-app:/app/static
+    command: sh -c "cp -r /app/dist/* /app/static/"
+    networks:
+      - network
+
+  backend:
+    build: ./WDI-Backend
+    container_name: wdi-app_backend
+    expose:
+      - "5000"
+    networks:
+      - network
+
+
+networks:
+  network:
+    driver: bridge
+
+
+
+
+# docker-compose --project-name wdi-app up
+

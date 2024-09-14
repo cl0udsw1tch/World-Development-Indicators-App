@@ -194,7 +194,7 @@ def getFormatData(countries: List[str], indicator: str, year_s: str, year_f: str
 def home() -> str:
     return "Hi there, welcome to the World Develpoment Indicators app, made to visualize the useful data from the World Bank :)"
 
-@app.route('/indicators/', defaults={'indicator': None})
+@app.route('/indicators', defaults={'indicator': None})
 @app.route("/indicators/<indicator>", methods=['GET']) 
 def indicators(indicator: str) -> List[Dict[str, str]] | Dict[str, str]:
     return getFormatIndicators(indicator=indicator)

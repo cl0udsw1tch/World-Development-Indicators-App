@@ -1,4 +1,4 @@
-import  { ReactHTML, useContext, useEffect, useRef, useState } from 'react'
+import  { useContext, useEffect, useRef, useState } from 'react'
 
 import { defaultInput, InputContextWriter } from '../../contexts/InputContext'
 import { SetStateType } from '../../types'

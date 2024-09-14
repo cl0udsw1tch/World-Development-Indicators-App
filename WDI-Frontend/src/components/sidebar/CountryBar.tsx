@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { API_countries_t } from "../../api"
 import { SetStateType } from "../../types"
 import { InputContextReader, InputContextWriter } from "../../contexts/InputContext"

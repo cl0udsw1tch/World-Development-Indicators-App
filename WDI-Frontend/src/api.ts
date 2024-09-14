@@ -1,5 +1,5 @@
 
-const API_ENDPOINT: string = "http://127.0.0.1:5000"
+const API_ENDPOINT: string = "http://localhost/api"
 
 
 export type API_data_t          = {[country: string] : {year: number, value: number}[]}
